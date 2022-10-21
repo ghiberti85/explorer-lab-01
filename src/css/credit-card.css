@@ -28,9 +28,8 @@
   line-height: 2.9rem;
   letter-spacing: 0.04em;
 
-  color: #e8e8e8;
+  color: #e8e8e8 !important;
   text-shadow: 0 0.12rem 0.32rem rgb(23 23 23 / 40%);
-  text-decoration: none;
 }
 
 .cc-holder,
