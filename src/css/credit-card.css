@@ -22,7 +22,7 @@
   gap: 1.4rem;
 }
 
-.cc-number:not(:empty) {
+.cc-number {
   font-size: 2.4rem;
   font-weight: bold;
   line-height: 2.9rem;
@@ -30,7 +30,11 @@
 
   color: #e8e8e8 !important;
   text-shadow: 0 0.12rem 0.32rem rgb(23 23 23 / 40%);
+}
+
+a:any-link {
   text-decoration: none !important;
+  color: #e8e8e8 !important;
 }
 
 .cc-holder,
