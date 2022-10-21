@@ -1,43 +1,47 @@
 import "./css/index.css"
 import IMask from "imask";
 
-const ccBgColor01 = document.querySelector(".cc-bg svg > g g:nth-child(1) path");
-const ccBgColor02 = document.querySelector(".cc-bg svg > g g:nth-child(2) path");
+const ccBGColor01 = document.querySelector(".cc-bg svg > g g:nth-child(1) path");
+const ccBGColor02 = document.querySelector(".cc-bg svg > g g:nth-child(2) path");
 
-const ccLogo = document.querySelector(".cc-logo span:nth-child(2) img");
+const ccLogo = document.querySelector(".cc-logo  span:nth-child(2) img");
 
 function setTypeCard(type) {
   const colors = {
-    visa: ["#436D99", "#2D57F2"],
-    mastercard: ["#DF6F29", "#C69347"],
+    visa: ["#2D57F2", "#436D99"],
+    mastercard: ["#C69347", "#DF6F29"],
+    nubank: ["#8A05BE",],
     default: ["black", "gray"]
-
   }
 
-  ccBgColor01.setAttribute("fill", colors[type][0]);
-  ccBgColor02.setAttribute("fill", colors[type][1]);
+  ccBGColor01.setAttribute("fill", colors[type][0]);
+  ccBGColor02.setAttribute("fill", colors[type][1]);
 
   ccLogo.setAttribute("src", `cc-${type}.svg`);
 }
 
 globalThis.setTypeCard = setTypeCard;
 
+//security
 
-
-const securityCode = document.querySelector("#security-code")
-const securityCodePattern = {
-  mask: "0000"
+const securityCode = document.querySelector("#security-code");
+const securityPattern = {
+  mask: "0000",
 }
-const securityCodeMasked = IMask(securityCode, securityCodePattern)
 
-const expirationDate = document.querySelector("#expiration-date")
+const securityCodeMasked = IMask(securityCode, securityPattern);
+
+
+//expiration date config
+const expirationDate = document.querySelector("#expiration-date");
+
 const expirationDatePattern = {
   mask: "MM{/}YY",
   blocks: {
     YY: {
       mask: IMask.MaskedRange,
       from: String(new Date().getFullYear()).slice(2),
-      to: String(new Date().getFullYear() + 10).slice(2)
+      to: String(new Date().getFullYear() + 10).slice(2),
     },
     MM: {
       mask: IMask.MaskedRange,
@@ -78,44 +82,51 @@ const cardNumberPattern = {
   },
 }
 
+
 const cardNumberMasked = IMask(cardNumber, cardNumberPattern)
 
-
 const addButton = document.querySelector("#add-card")
+
 addButton.addEventListener("click", () => {
-  alert("Cartão adicionado com sucesso!")
+  console.log("Olá mundo");
 })
 
 document.querySelector("form").addEventListener("submit", (event) => {
   event.preventDefault()
 })
 
+
 const cardHolder = document.querySelector("#card-holder")
+
 cardHolder.addEventListener("input", () => {
   const ccHolder = document.querySelector(".cc-holder .value")
 
-  ccHolder.innerText = cardHolder.value.length === 0 ? "FULANO DA SILVA" : cardHolder.value
+  ccHolder.innerText = cardHolder.value.length === 0 ? "Fulano da silva" : cardHolder.value
 })
 
+
 securityCodeMasked.on("accept", () => {
-  updateSecurityCode(securityCodeMasked.value)
+  updateSecurityCode(securityCodeMasked.value);
 })
 
 function updateSecurityCode(code) {
   const ccSecurity = document.querySelector(".cc-security .value")
   ccSecurity.innerText = code.length === 0 ? "123" : code
+
 }
+
 
 cardNumberMasked.on("accept", () => {
   const cardType = cardNumberMasked.masked.currentMask.cardtype
   console.log(cardType)
   setTypeCard(cardType)
   updateCardNumber(cardNumberMasked.value)
-});
+})
 
 function updateCardNumber(number) {
   const ccNumber = document.querySelector(".cc-number")
   ccNumber.innerText = number.length === 0 ? "1234 5678 9012 3456" : number
+
 }
 
 expirationDateMasked.on("accept", () => {
