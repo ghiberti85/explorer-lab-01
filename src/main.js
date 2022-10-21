@@ -93,6 +93,11 @@ document.querySelector("form").addEventListener("submit", (event) => {
 const cardHolder = document.querySelector("#card-holder")
 cardHolder.addEventListener("input", () => {
   const ccHolder = document.querySelector(".cc-holder .value")
+  const maxValue = 32;
+  console.log(cardHolder.value.length)
+  if (cardHolder.value.length > maxValue) {
+    cardHolder.value = cardHolder.value.substr(0, maxValue)
+  }
 
   ccHolder.innerText = cardHolder.value.length === 0 ? "FULANO DA SILVA" : cardHolder.value
 })
@@ -108,7 +113,6 @@ function updateSecurityCode(code) {
 
 cardNumberMasked.on("accept", () => {
   const cardType = cardNumberMasked.masked.currentMask.cardtype
-  console.log(cardType)
   setTypeCard(cardType)
   updateCardNumber(cardNumberMasked.value)
 });
@@ -116,6 +120,12 @@ cardNumberMasked.on("accept", () => {
 function updateCardNumber(number) {
   const ccNumber = document.querySelector(".cc-number")
   ccNumber.innerText = number.length === 0 ? "1234 5678 9012 3456" : number
+
+  const maxValue = 16;
+
+  if (ccNumber.value.length > maxValue) {
+    ccNumber.value = ccNumber.value.substr(0, maxValue)
+  }
 }
 
 expirationDateMasked.on("accept", () => {
